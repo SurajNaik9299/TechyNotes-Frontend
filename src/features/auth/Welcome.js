@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 const Welcome = () => {
-  const { username, isManager, isAdmin } = useAuth();
+  const {isManager, isAdmin } = useAuth();
   const date = new Date();
   const today = new Intl.DateTimeFormat("en-US", {
     dateStyle: "full",

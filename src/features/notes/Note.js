@@ -1,14 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-
-import { useSelector } from "react-redux";
-import { selectNoteById } from "./notesApiSlice";
+import {memo} from 'react'
+import { useGetNotesQuery } from "./notesApiSlice";
 import React from "react";
 
 const Note = ({ noteId }) => {
-  const note = useSelector((state) => selectNoteById(state, noteId));
-
+  const { note } = useGetNotesQuery("notesList", {
+    selectFromResult: ({ data }) => ({
+      note: data?.entities[noteId],
+    }),
+  });
   const navigate = useNavigate();
 
   if (note) {
@@ -46,7 +48,8 @@ const Note = ({ noteId }) => {
   } else {
     return null;
   }
-
 };
 
-export default Note;
+const memoizedNote = memo(Note)
+
+export default memoizedNote;
